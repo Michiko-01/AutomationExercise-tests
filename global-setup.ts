@@ -7,12 +7,12 @@ dotenv.config();
 //Login and save session for authentication
 async function globalSetup(config: FullConfig) {
   const { baseURL, storageState } = config.projects[0].use;
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
-  await page.goto(baseURL! + '/login');
+  await page.goto(baseURL! + '/login', { waitUntil: 'networkidle' });
 
   const landingPage = new LandingPageModel(page);
-  await landingPage.acceptConsent();
+  await await landingPage.acceptConsent();
 
   const loginPage = new LoginPageModel(page);
   await loginPage.enterCredentials(
