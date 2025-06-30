@@ -9,10 +9,12 @@ async function globalSetup(config: FullConfig) {
   const { baseURL, storageState } = config.projects[0].use;
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.goto(baseURL! + '/login', { waitUntil: 'networkidle' });
+  await page.goto(baseURL! + '/login');
 
   const landingPage = new LandingPageModel(page);
-  //await landingPage.acceptConsent();
+  if (!process.env.CI) {
+    await landingPage.acceptConsent();
+  }
 
   const loginPage = new LoginPageModel(page);
   await loginPage.enterCredentials(
