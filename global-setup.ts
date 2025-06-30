@@ -12,7 +12,7 @@ async function globalSetup(config: FullConfig) {
   await page.goto(baseURL! + '/login', { waitUntil: 'networkidle' });
 
   const landingPage = new LandingPageModel(page);
-  await landingPage.acceptConsent();
+  //await landingPage.acceptConsent();
 
   const loginPage = new LoginPageModel(page);
   await loginPage.enterCredentials(
